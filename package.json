@@ -1,0 +1,19 @@
+{
+  "name": "neightborhood-map",
+  "version": "1.0.0",
+  "description": "Its a simple app that uses google maps API with additional features",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sankitshane/Neighborhood-Map.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sankitshane/Neighborhood-Map/issues"
+  },
+  "homepage": "https://github.com/sankitshane/Neighborhood-Map#readme"
+}
