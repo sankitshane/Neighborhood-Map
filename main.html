@@ -7,7 +7,9 @@
       Neighborhood Map
     </title>
     <link rel="stylesheet" href="style/main.css">
-  </head>
+    <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=zocial" />
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+</head>
 
   <body>
 
@@ -20,11 +22,34 @@
       <h2 class="header_component">Neighborhood Map</h2>
     </header>
     <nav id='slide-menu' class="demo">
+      <h2>Menu</h2>
       <ul>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li class="menu-element">
+          <input type="checkbox" id="id-name--1" name="set-name" class="switch-input">
+          <label for="id-name--1" class="switch-label">Geo Location <span class="toggle--on">On</span><span class="toggle--off">Off</span></label>
+        </li>
+        <li class="menu-element">
+          <h3>Search for a perticular place</h3>
+        </li>
+        <li>
+          <input type="text" name="Place" placeholder="New York City">
+          <button type="button" class="last_ones">Search</button>
+        </li>
+        <li class="last_ones">
+          <button type="button">Set Marker</button>
+        </li>
+        <li class="last_ones">
+          <button type="button">Find Area</button>
+        </li>
       </ul>
+      <div id='creator'>
+        <article class="links">
+          <a class="zocial-googleplus link" href="https://plus.google.com/u/0/113922165364325086198"> Google +</a>
+          <a class="zocial-facebook link" href="https://www.facebook.com/sankit.acharya"> FaceBook</a>
+          <a class="zocial-twitter link" href="https://twitter.com/Sankit_shane"> Twitter</a>
+          <a class="zocial-github link" href="https://github.com/sankitshane"> GitHub</a>
+        </article>
+      </div>
     </nav>
     <div id="map"></div>
     <!--FrameWorks-->
