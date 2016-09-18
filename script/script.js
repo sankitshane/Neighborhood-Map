@@ -7,3 +7,7 @@ function initMap() {
   });
 
 }
+
+$('#nav-icon').click(function(){
+  $(this).toggleClass('open');
+});
