@@ -27,7 +27,7 @@ header h2 {
   margin: 0;
   margin-top: 20px;
   color: white;
-  padding-left: calc(100%/2 - 200px);
+  padding-left: calc(100%/2 - 190px);
 }
 
 #nav-icon {
@@ -98,4 +98,45 @@ header h2 {
   -moz-transform: rotate(-135deg);
   -o-transform: rotate(-135deg);
   transform: rotate(-135deg);
+}
+
+nav#slide-menu {
+  background-color: #000000;
+  z-index: 10;
+  position: fixed;
+  top: 65px;
+  left: -350px;
+  bottom: 0;
+  display: block;
+  float: left;
+  width: 100%;
+  max-width: 350px;
+  height: 100%;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
+}
+
+nav#slide-menu > ul {
+  display: block;
+  margin: 40px;
+  padding: 0;
+  list-style: none;
+  opacity: 0.5;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
+}
+nav#slide-menu > ul li {
+  color: #dfe5eb;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+#slide-menu.menu-active {
+  left:0px;
+}
+#slide-menu.menu-active ul {
+  left: 0px;
+  opacity: 1;
 }

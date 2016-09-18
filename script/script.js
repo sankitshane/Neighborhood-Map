@@ -10,4 +10,5 @@ function initMap() {
 
 $('#nav-icon').click(function(){
   $(this).toggleClass('open');
+  $('#slide-menu').toggleClass('menu-active');
 });
