@@ -12,6 +12,7 @@ function initMap() {
   if(status){
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
+        alert(position);
         var pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
