@@ -10,26 +10,37 @@ function initMap() {
   $('#id-name--1').change(function() {
   status = $('#id-name--1').prop("checked");
   if(status){
-  if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
-          infoWindow.setPosition(pos);
-          infoWindow.setContent('Location found.');
-          map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-      }
-      else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-      }
-      }).change();
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('Location found.');
+        map.setCenter(pos);
+        },
+        function() {
+          handleLocationError(true, infoWindow, map.getCenter());
+        });
+    }
+    else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+  }
+  else {
+    var pos = {
+      lat: 40.7413549,
+      lng: -73.9980244
+    };
+
+    infoWindow.setPosition(pos);
+    infoWindow.setContent('New York City');
+    map.setCenter(pos);
+  }
+  }).change();
 
 }
 
