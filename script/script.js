@@ -55,3 +55,29 @@ $('#nav-icon').click(function(){
   $(this).toggleClass('open');
   $('#slide-menu').toggleClass('menu-active');
 });
+
+function AppViewModel() {
+  this.searchPlace = function() {
+    var geocoder = new google.maps.Geocoder();
+    var address = $("#place").val();
+
+    if(address == ' ') {
+      window.alert('You must enter an area, or address.');
+    }
+    else {
+      geocoder.geocode(
+            { address: address,
+            }, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                map.setZoom(15);
+              } else {
+                window.alert('We could not find that location - try entering a more' +
+                    ' specific place.');
+              }
+            });
+    }
+  }
+}
+
+ko.applyBindings(new AppViewModel);
