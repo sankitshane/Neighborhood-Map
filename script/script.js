@@ -16,7 +16,7 @@ function initMap() {
       anchorPoint: new google.maps.Point(0, -29)
   });
   autocomplete.addListener('place_changed', function() {
-          infowindow.close();
+          infoWindow.close();
           marker.setVisible(false);
           var place = autocomplete.getPlace();
           if (!place.geometry) {
@@ -29,7 +29,7 @@ function initMap() {
             map.fitBounds(place.geometry.viewport);
           } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
+            map.setZoom(15);
           }
           marker.setIcon(/** @type {google.maps.Icon} */({
             url: place.icon,
@@ -50,8 +50,8 @@ function initMap() {
             ].join(' ');
           }
 
-          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-          infowindow.open(map, marker);
+          infoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+          infoWindow.open(map, marker);
         });
 
   var status ;
@@ -105,7 +105,7 @@ $('#nav-icon').click(function(){
 });
 
 function AppViewModel() {
-  this.searchPlace = function() {
+  this.zoom = function() {
     var geocoder = new google.maps.Geocoder();
     var address = $("#search_place").val();
 
@@ -118,7 +118,7 @@ function AppViewModel() {
             }, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
-                map.setZoom(15);
+                map.setZoom(18);
               } else {
                 window.alert('We could not find that location - try entering a more' +
                     ' specific place.');
