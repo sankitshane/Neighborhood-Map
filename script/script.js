@@ -107,7 +107,7 @@ $('#nav-icon').click(function(){
 function AppViewModel() {
   this.searchPlace = function() {
     var geocoder = new google.maps.Geocoder();
-    var address = $("#place").val();
+    var address = $("#search_place").val();
 
     if(address == ' ') {
       window.alert('You must enter an area, or address.');
