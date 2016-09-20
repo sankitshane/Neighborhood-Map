@@ -6,9 +6,9 @@ function initMap() {
     zoom : 13
   });
 
+  var input = $('#search_place').val();
   var infoWindow = new google.maps.InfoWindow({map: map});
-
-  var autocomplete = new google.maps.Autocomplete($('#search_place'));
+  var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
 
   var marker = new google.maps.Marker({
@@ -53,7 +53,7 @@ function initMap() {
           infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
           infowindow.open(map, marker);
         });
-        
+
   var status ;
   $('#id-name--1').change(function() {
   status = $('#id-name--1').prop("checked");
