@@ -6,7 +6,7 @@ function initMap() {
     zoom : 13
   });
 
-  var input = $('#search_place').val();
+  var input = document.getElementById('search_place');
   var infoWindow = new google.maps.InfoWindow({map: map});
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
