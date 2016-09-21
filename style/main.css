@@ -277,3 +277,11 @@ a {
 article {
   margin-left: 15px;
 }
+
+#filter_content {
+  display: flex;
+}
+
+.filter_item {
+  height: 37px;
+}
