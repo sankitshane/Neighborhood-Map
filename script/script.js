@@ -1,5 +1,6 @@
 var map;
 var count = 0;
+var store_address = [];
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'),{
     center: {lat: 40.7413549, lng: -73.9980244},
@@ -29,7 +30,7 @@ function initMap() {
             map.fitBounds(place.geometry.viewport);
           } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(15);
+            map.setZoom(13);
           }
           marker.setIcon(/** @type {google.maps.Icon} */({
             url: place.icon,
@@ -118,13 +119,42 @@ function AppViewModel() {
             }, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
-                map.setZoom(18);
+                map.setZoom(15);
               } else {
                 window.alert('We could not find that location - try entering a more' +
                     ' specific place.');
               }
             });
     }
+  }
+  this.storeaddr = function() {
+    var geocoder = new google.maps.Geocoder();
+    var address = $("#search_place").val();
+    if(address == ' ') {
+      window.alert('You must enter an area, or address.');
+    }
+    else {
+      geocoder.geocode(
+        { address: address,
+        }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            var marker = new google.maps.Marker({
+            map:map,
+            position: results[0].geometry.location,
+            title: address,
+            animation: google.maps.Animation.DROP,
+            id: count
+            });
+            store_address.push(address);
+            count = count +1;
+          }
+          else {
+            window.alert('We could not find that location - try entering a more' +
+                ' specific place.');
+          }
+        });
+        }
+
   }
 }
 
