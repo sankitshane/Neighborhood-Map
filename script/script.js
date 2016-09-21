@@ -100,9 +100,16 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
       'Error: Your browser doesn\'t support geolocation.');
 }
 
-$('#nav-icon').click(function(){
+$('.nav-icon').click(function(){
   $(this).toggleClass('open');
+});
+
+$('.slide1').click(function() {
   $('#slide-menu').toggleClass('menu-active');
+});
+
+$('.slide2').click(function(){
+  $('#slide-menu_right').toggleClass('menu-active');
 });
 
 function AppViewModel() {
