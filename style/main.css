@@ -285,3 +285,9 @@ article {
 .filter_item {
   height: 37px;
 }
+
+#show {
+  position: fixed;
+  width: 350px;
+  bottom: 0;
+}

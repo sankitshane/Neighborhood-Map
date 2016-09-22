@@ -61,9 +61,10 @@
         <button type="button"><img src="cd-icon-filter.svg"> Filter</button>
         <input type="text" id="filter" class="filter_item">
       </div>
-      <ul>
-        
+      <ul data-bind="foreach: store_address()">
+        <li data-bind="text: title"></li>
       </ul>
+      <button type="button" id="show" data-bind="click: mark">Show all Location</button>
     </nav>
     <div id="map"></div>
     <!--FrameWorks-->

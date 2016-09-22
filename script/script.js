@@ -1,6 +1,7 @@
 var map;
 var count = 0;
-var store_address = [];
+
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'),{
     center: {lat: 40.7413549, lng: -73.9980244},
@@ -16,6 +17,9 @@ function initMap() {
       map: map,
       anchorPoint: new google.maps.Point(0, -29)
   });
+
+
+
   autocomplete.addListener('place_changed', function() {
           infoWindow.close();
           marker.setVisible(false);
@@ -113,6 +117,30 @@ $('.slide2').click(function(){
 });
 
 function AppViewModel() {
+  this.store_address = ko.observableArray([
+    {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
+            {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
+            {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
+            {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
+            {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
+            {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
+  ]);
+  this.mark = function() {
+    for (var i = 0; i < this.store_address().length; i++) {
+            // Get the position from the location array.
+            var position = this.store_address()[i].location;
+            var title = this.store_address()[i].title;
+            // Create a marker per location, and put into markers array.
+            var marker = new google.maps.Marker({
+              map: map,
+              position: position,
+              title: title,
+              animation: google.maps.Animation.DROP,
+              id: i
+            });
+  }
+};
+
   this.zoom = function() {
     var geocoder = new google.maps.Geocoder();
     var address = $("#search_place").val();
@@ -133,7 +161,7 @@ function AppViewModel() {
               }
             });
     }
-  }
+  };
   this.storeaddr = function() {
     var geocoder = new google.maps.Geocoder();
     var address = $("#search_place").val();
@@ -152,7 +180,7 @@ function AppViewModel() {
             animation: google.maps.Animation.DROP,
             id: count
             });
-            store_address.push(address);
+            store_address.push({title:address,location:results[0].geometry.location});
             count = count +1;
           }
           else {
@@ -162,7 +190,7 @@ function AppViewModel() {
         });
         }
 
-  }
+  };
 }
 
 ko.applyBindings(new AppViewModel);
