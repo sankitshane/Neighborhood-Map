@@ -124,6 +124,8 @@ function known_places(title, location) {
 
 function AppViewModel() {
   var self = this;
+  self.filter = ko.observable('');
+
   self.store_address = ko.observableArray([
     new known_places("Park Ave Penthouse",{lat: 40.7713024, lng: -73.9632393}),
     new known_places("Chelsea Loft",{lat: 40.7444883, lng: -73.9949465}),
@@ -132,6 +134,13 @@ function AppViewModel() {
     new known_places("TriBeCa Artsy Bachelor Pad",{lat: 40.7195264, lng: -74.0089934}),
     new known_places("Chinatown Homey Space",{lat: 40.7180628, lng: -73.9961237})
   ]);
+
+  self.filteredItems = ko.computed(function() {
+    var filter = self.filter();
+    if (!filter) { return self.store_address(); }
+    return self.store_address().filter(function(i) {
+       return i.title.indexOf(filter) > -1; });
+  })
 
   self.mark = function() {
     for (var i = 0; i < self.store_address().length; i++) {

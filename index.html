@@ -58,11 +58,11 @@
     </nav>
     <nav id='slide-menu_right'>
       <div id="filter_content">
-        <button type="button"><img src="cd-icon-filter.svg"> Filter</button>
-        <input type="text" id="filter" class="filter_item">
+        <button type="button" style="background-color:#283593;border-color:#283593"><img src="cd-icon-filter.svg"><strong> Filter</strong></button>
+        <input type="text" id="filter" class="filter_item" data-bind="textInput: filter">
       </div>
-      <ul data-bind="foreach: store_address()">
-        <li data-bind="text: title"></li>
+      <ul data-bind="foreach: filteredItems">
+        <li data-bind="text: $data.title"></li>
       </ul>
       <button type="button" id="show" data-bind="click: mark">Show all Location</button>
     </nav>
