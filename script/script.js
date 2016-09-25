@@ -116,15 +116,38 @@ $('.slide2').click(function(){
   $('#slide-menu_right').toggleClass('menu-active');
 });
 
-function known_places(title, location) {
-  var self = this;
-  self.title = title;
-  self.location = location;
-}
+
 
 function AppViewModel() {
   var self = this;
   self.filter = ko.observable('');
+
+  function known_places(title, location) {
+    var self = this;
+    self.title = title;
+    self.location = location;
+    self.show = function() {
+      var geocoder = new google.maps.Geocoder();
+      var location = self.location;
+
+      if(address == ' ') {
+        window.alert('You must enter an area, or address.');
+      }
+      else {
+        geocoder.geocode(
+              { location: location,
+              }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  map.setCenter(results[0].geometry.location);
+                  map.setZoom(15);
+                } else {
+                  window.alert('We could not find that location - try entering a more' +
+                      ' specific place.');
+                }
+              });
+      }
+    };
+  }
 
   self.store_address = ko.observableArray([
     new known_places("Park Ave Penthouse",{lat: 40.7713024, lng: -73.9632393}),
@@ -158,7 +181,7 @@ function AppViewModel() {
   }
 };
 
-  self.zoom = function() {
+  self.zoom = function(address) {
     var geocoder = new google.maps.Geocoder();
     var address = $("#search_place").val();
 
@@ -210,5 +233,6 @@ function AppViewModel() {
 
   };
 }
+
 
 ko.applyBindings(new AppViewModel);

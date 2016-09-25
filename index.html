@@ -62,7 +62,7 @@
         <input type="text" id="filter" class="filter_item" data-bind="textInput: filter">
       </div>
       <ul data-bind="foreach: filteredItems">
-        <li data-bind="text: $data.title"></li>
+        <li data-bind="text: $data.title, click: $data.show"></li>
       </ul>
       <button type="button" id="show" data-bind="click: mark">Show all Location</button>
     </nav>
