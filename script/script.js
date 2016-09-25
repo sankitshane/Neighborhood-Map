@@ -116,20 +116,28 @@ $('.slide2').click(function(){
   $('#slide-menu_right').toggleClass('menu-active');
 });
 
+function known_places(title, location) {
+  var self = this;
+  self.title = title;
+  self.location = location;
+}
+
 function AppViewModel() {
-  this.store_address = ko.observableArray([
-    {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-            {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-            {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-            {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-            {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-            {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
+  var self = this;
+  self.store_address = ko.observableArray([
+    new known_places("Park Ave Penthouse",{lat: 40.7713024, lng: -73.9632393}),
+    new known_places("Chelsea Loft",{lat: 40.7444883, lng: -73.9949465}),
+    new known_places("Union Square Open Floor Plan",{lat: 40.7347062, lng: -73.9895759}),
+    new known_places("East Village Hip Studio",{lat: 40.7281777, lng: -73.984377}),
+    new known_places("TriBeCa Artsy Bachelor Pad",{lat: 40.7195264, lng: -74.0089934}),
+    new known_places("Chinatown Homey Space",{lat: 40.7180628, lng: -73.9961237})
   ]);
-  this.mark = function() {
-    for (var i = 0; i < this.store_address().length; i++) {
+
+  self.mark = function() {
+    for (var i = 0; i < self.store_address().length; i++) {
             // Get the position from the location array.
-            var position = this.store_address()[i].location;
-            var title = this.store_address()[i].title;
+            var position = self.store_address()[i].location;
+            var title = self.store_address()[i].title;
             // Create a marker per location, and put into markers array.
             var marker = new google.maps.Marker({
               map: map,
@@ -141,7 +149,7 @@ function AppViewModel() {
   }
 };
 
-  this.zoom = function() {
+  self.zoom = function() {
     var geocoder = new google.maps.Geocoder();
     var address = $("#search_place").val();
 
@@ -162,7 +170,8 @@ function AppViewModel() {
             });
     }
   };
-  this.storeaddr = function() {
+
+  self.storeaddr = function() {
     var geocoder = new google.maps.Geocoder();
     var address = $("#search_place").val();
     if(address == ' ') {
@@ -180,7 +189,7 @@ function AppViewModel() {
             animation: google.maps.Animation.DROP,
             id: count
             });
-            store_address.push({title:address,location:results[0].geometry.location});
+            self.store_address.push(new known_places(address,results[0].geometry.location));
             count = count +1;
           }
           else {
