@@ -130,7 +130,7 @@ function AppViewModel() {
       var geocoder = new google.maps.Geocoder();
       var location = self.location;
 
-      if(address == ' ') {
+      if(location == ' ') {
         window.alert('You must enter an area, or address.');
       }
       else {
