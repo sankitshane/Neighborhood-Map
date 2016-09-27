@@ -170,16 +170,17 @@ function AppViewModel() {
     self.largeInfowindow = new google.maps.InfoWindow();
     for (var i = 0; i < self.store_address().length; i++) {
             // Get the position from the location array.
-            var position = self.store_address()[i].location;
-            var title = self.store_address()[i].title;
+            self.position = self.store_address()[i].location;
+            self.title = self.store_address()[i].title;
             // Create a marker per location, and put into markers array.
             var marker = new google.maps.Marker({
               map: map,
-              position: position,
-              title: title,
+              position: self.position,
+              title: self.title,
               animation: google.maps.Animation.DROP,
               id: i
             });
+
             marker.addListener('click', function() {
             self.populateInfoWindow(this, self.largeInfowindow);
           });
@@ -211,6 +212,7 @@ function AppViewModel() {
   self.storeaddr = function() {
     var geocoder = new google.maps.Geocoder();
     var address = $("#search_place").val();
+    self.largeInfowindow = new google.maps.InfoWindow();
     if(address == ' ') {
       window.alert('You must enter an area, or address.');
     }
@@ -224,7 +226,10 @@ function AppViewModel() {
             position: results[0].geometry.location,
             title: address,
             animation: google.maps.Animation.DROP,
-            id: count
+            id: count,
+            });
+            marker.addListener('click', function() {
+            self.populateInfoWindow(this, self.largeInfowindow);
             });
             self.store_address.push(new known_places(address,results[0].geometry.location));
             count = count +1;
@@ -238,7 +243,8 @@ function AppViewModel() {
 
   };
 
-  this.populateInfoWindow = function(marker, infowindow) {
+  self.populateInfoWindow = function(marker, infowindow) {
+    console.log(marker.position);
     if (infowindow.marker != marker) {
           // Clear the infowindow content to give the streetview time to load.
           infowindow.setContent('');
@@ -247,38 +253,10 @@ function AppViewModel() {
           infowindow.addListener('closeclick', function() {
             infowindow.marker = null;
           });
-          var streetViewService = new google.maps.StreetViewService();
-          var radius = 50;
-          // In case the status is OK, which means the pano was found, compute the
-          // position of the streetview image, then calculate the heading, then get a
-          // panorama from that and set the options
-          function getStreetView(data, status) {
-            if (status == google.maps.StreetViewStatus.OK) {
-              var nearStreetViewLocation = data.location.latLng;
-              var heading = google.maps.geometry.spherical.computeHeading(
-                nearStreetViewLocation, marker.position);
-                infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
-                var panoramaOptions = {
-                  position: nearStreetViewLocation,
-                  pov: {
-                    heading: heading,
-                    pitch: 30
-                  }
-                };
-              var panorama = new google.maps.StreetViewPanorama(
-                document.getElementById('pano'), panoramaOptions);
-            } else {
-              infowindow.setContent('<div>' + marker.title + '</div>' +
-                '<div>No Street View Found</div>');
+          infowindow.setContent('<div>' + marker.title + '</div>' + '<img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=500x300&location=' +marker.position.lat() +','+marker.position.lng()+'&fov=90&heading=235&pitch=10 &key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&v=3">');
             }
+            infowindow.open(map, marker);
           }
-          // Use streetview service to get the closest streetview image within
-          // 50 meters of the markers position
-          streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-          // Open the infowindow on the correct marker.
-          infowindow.open(map, marker);
-        }
-  };
 }
 
 
