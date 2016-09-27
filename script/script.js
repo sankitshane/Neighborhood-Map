@@ -5,8 +5,19 @@ var count = 0;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'),{
     center: {lat: 40.7413549, lng: -73.9980244},
-    zoom : 13
+    zoom : 13,
+    zoomControl: true,
+    zoomControlOptions: {
+        position: google.maps.ControlPosition.LEFT_CENTER
+    },
+    scaleControl: true,
+    streetViewControl: true,
+    streetViewControlOptions: {
+        position: google.maps.ControlPosition.LEFT_TOP
+    }
   });
+  var news = document.getElementById('news')
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(news);
 
   var input = document.getElementById('search_place');
   var infoWindow = new google.maps.InfoWindow({map: map});
@@ -244,7 +255,6 @@ function AppViewModel() {
   };
 
   self.populateInfoWindow = function(marker, infowindow) {
-    console.log(marker.position);
     if (infowindow.marker != marker) {
           // Clear the infowindow content to give the streetview time to load.
           infowindow.setContent('');
@@ -256,6 +266,26 @@ function AppViewModel() {
           infowindow.setContent('<div>' + marker.title + '</div>' + '<img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=500x300&location=' +marker.position.lat() +','+marker.position.lng()+'&fov=90&heading=235&pitch=10 &key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&v=3">');
             }
             infowindow.open(map, marker);
+            $('#news').text("");
+            var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+            url += '?' + $.param({
+              'q' : marker.title,
+              'api-key': "1fabcf73aa33430db64ff29eca489e43"
+            });
+            $.getJSON(url,function(data) {
+              $('#news_header').text('New YorkTimes Article About' + marker.title);
+                articles = data.response.docs;
+                for(var i = 0;i < articles.length ;i++) {
+                  var article = articles[i];
+
+                  $('#news').append('<li class="article">'+
+                        '<a href="' + article.web_url+'">'+article.headline.main+'</a>'
+                        +'<p>'+article.snippet+'</p>'+
+                          '</li>');
+                };
+              }).fail(function(e) {
+      $('#news_header').text('New York Times Article Could Not be Loaded');
+    });
           }
 }
 

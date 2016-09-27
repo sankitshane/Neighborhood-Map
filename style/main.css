@@ -291,3 +291,9 @@ article {
   width: 350px;
   bottom: 0;
 }
+
+#news {
+  background-color: white;
+  width: 350px;
+  overflow-y: scroll;
+}
