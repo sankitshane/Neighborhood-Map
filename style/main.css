@@ -341,3 +341,9 @@ article {
   border-bottom: 1px solid #BDBDBD;
   font-family: 'Lato', sans-serif;
 }
+
+.place_title {
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Lato', sans-serif;
+}
