@@ -10,71 +10,79 @@
     <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=zocial" />
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 </head>
-
-  <body>
-
-    <header>
-      <div class="header_component slide1 nav-icon">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <h2 class="header_component">Neighborhood Map</h2>
-      <div class="header_component slide2 nav-icon" style="position:absolute;right:0;margin-right:10px;">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </header>
-    <nav id='slide-menu'>
-      <h2>Menu</h2>
-      <ul>
-        <li class="menu-element">
-          <input type="checkbox" id="id-name--1" name="set-name" class="switch-input" >
-          <label for="id-name--1" class="switch-label">Geo Location <span class="toggle--on">On</span><span class="toggle--off">Off</span></label>
-        </li>
-        <li class="menu-element">
-          <h3>Search for a perticular place</h3>
-        </li>
-        <li>
-          <input type="text" name="Place" placeholder="New York City" id="search_place">
-          <button type="button" class="last_ones" data-bind="click: zoom">Zoom</button>
-        </li>
-        <li class="last_ones">
-          <button type="button" data-bind="click: storeaddr">Set Marker</button>
-        </li>
-      </ul>
-      <div id='creator'>
-        <article class="links">
-          <a class="zocial-googleplus link" href="https://plus.google.com/u/0/113922165364325086198"> Google +</a>
-          <a class="zocial-facebook link" href="https://www.facebook.com/sankit.acharya"> FaceBook</a>
-          <a class="zocial-twitter link" href="https://twitter.com/Sankit_shane"> Twitter</a>
-          <a class="zocial-github link" href="https://github.com/sankitshane"> GitHub</a>
-        </article>
-      </div>
-    </nav>
-    <nav id='slide-menu_right'>
-      <div id="filter_content">
-        <button type="button" style="background-color:#283593;border-color:#283593"><img src="cd-icon-filter.svg"><strong> Filter</strong></button>
-        <input type="text" id="filter" class="filter_item" data-bind="textInput: filter">
-      </div>
-      <ul data-bind="foreach: filteredItems">
-        <li data-bind="text: $data.title, click: $data.show"></li>
-      </ul>
-      <button type="button" id="show" data-bind="click: mark">Show all Location</button>
-    </nav>
-    <div id="news_container">
-      <h2 id="news_header"></h2>
-      <ul id="news"></ul>
+<body>
+  <!--Header Tab of the page contain two menus, one top-left side and other top-right side-->
+  <header>
+    <div class="header_component slide1 nav-icon">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-
-    <div id="map"></div>
-    <!--FrameWorks-->
-    <script type='text/javascript' src='Library/knockout-3.4.0.js' ></script>
-    <script type='text/javascript' src='Library/jquery-3.1.0.js' ></script>
-    <!--Scripts-->
-    <script type='text/javascript' src='script/script.js'></script>
-    <!--API-->
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&callback=initMap" async defer></script>
-  </body>
+    <h2 class="header_component">Neighborhood Map</h2>
+    <div class="header_component slide2 nav-icon" style="position:absolute;right:0;margin-right:10px;">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+  <!--Slide Menu of the Left-->
+  <nav id='slide-menu'>
+    <h2>Menu</h2>
+    <ul>
+      <!--Check button to automatically find your location-->
+      <li class="menu-element">
+        <input type="checkbox" id="id-name--1" name="set-name" class="switch-input" >
+        <label for="id-name--1" class="switch-label">Geo Location <span class="toggle--on">On</span><span class="toggle--off">Off</span></label>
+      </li>
+      <!--Search for perticular places with autocomplete functionality-->
+      <li class="menu-element">
+        <h3>Search for a perticular place</h3>
+      </li>
+      <!--Button to zoom on the place in the text input-->
+      <li>
+        <input type="text" name="Place" placeholder="New York City" id="search_place">
+        <button type="button" class="last_ones" data-bind="click: zoom">Zoom</button>
+      </li>
+      <!--Button to put markers at your desired location in the input field-->
+      <li class="last_ones">
+        <button type="button" data-bind="click: storeaddr">Set Marker</button>
+      </li>
+    </ul>
+    <!--Links to Socail Networking sites.Be sure to say Hi sometimes :) -->
+    <div id='creator'>
+      <article class="links">
+        <a class="zocial-googleplus link" href="https://plus.google.com/u/0/113922165364325086198"> Google +</a>
+        <a class="zocial-facebook link" href="https://www.facebook.com/sankit.acharya"> FaceBook</a>
+        <a class="zocial-twitter link" href="https://twitter.com/Sankit_shane"> Twitter</a>
+        <a class="zocial-github link" href="https://github.com/sankitshane"> GitHub</a>
+      </article>
+    </div>
+  </nav>
+  <!--Silde Menu from the right, Containing default location-->
+  <nav id='slide-menu_right'>
+    <div id="filter_content">
+      <button type="button" style="background-color:#283593;border-color:#283593"><img src="cd-icon-filter.svg"><strong> Filter</strong></button>
+      <input type="text" id="filter" class="filter_item" data-bind="textInput: filter">
+    </div>
+    <!--List field to show all the location marked-->
+    <ul data-bind="foreach: filteredItems">
+      <li data-bind="text: $data.title, click: $data.show"></li>
+    </ul>
+    <button type="button" id="show" data-bind="click: mark">Show all Location</button>
+  </nav>
+  <!--News Stand for the marker your just clicked-->
+  <div id="news_container">
+    <h2 id="news_header"></h2>
+    <ul id="news"></ul>
+  </div>
+  <!--Where the map is loaded-->
+  <div id="map"></div>
+  <!--FrameWorks-->
+  <script type='text/javascript' src='Library/knockout-3.4.0.js' ></script>
+  <script type='text/javascript' src='Library/jquery-3.1.0.js' ></script>
+  <!--Scripts-->
+  <script type='text/javascript' src='script/script.js'></script>
+  <!--API-->
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&callback=initMap" async defer></script>
+</body>
 </html>
