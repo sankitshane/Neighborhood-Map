@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=zocial" />
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 </head>
-<body>
+<body onload="knock.mark()">
   <!--Header Tab of the page contain two menus, one top-left side and other top-right side-->
   <header>
     <div class="header_component slide1 nav-icon">
@@ -68,7 +68,6 @@
     <ul data-bind="foreach: filteredItems">
       <li data-bind="text: $data.title, click: $data.show"></li>
     </ul>
-    <button type="button" id="show" data-bind="click: mark">Show all Location</button>
   </nav>
   <!--News Stand for the marker your just clicked-->
   <div id="news_container">

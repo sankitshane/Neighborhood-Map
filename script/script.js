@@ -329,4 +329,5 @@ function AppViewModel() {
 }
 
 //Knockout is applied to the page.
-ko.applyBindings(new AppViewModel);
+var knock = new AppViewModel();
+ko.applyBindings(knock);
