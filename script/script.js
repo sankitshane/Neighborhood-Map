@@ -9,7 +9,7 @@ function initMap() {
     zoom : 13,
     zoomControl: true,
     zoomControlOptions: {
-      position: google.maps.ControlPosition.LEFT_CENTER
+      position: google.maps.ControlPosition.LEFT_TOP
     },
     scaleControl: true,
     streetViewControl: true,
@@ -19,12 +19,14 @@ function initMap() {
   });
 
   //Variables for ControlPosition and Autocomplete.
+  var news_button = document.getElementById('news_button');
   var news = document.getElementById('news_container');
   var input = document.getElementById('search_place');
   var infoWindow = new google.maps.InfoWindow({map: map});
   var autocomplete = new google.maps.places.Autocomplete(input);
 
   //Pushing news Stand to the top right of the screen.
+  map.controls[google.maps.ControlPosition.LEFT_TOP].push(news_button);
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(news);
   autocomplete.bindTo('bounds', map);
 
@@ -82,6 +84,7 @@ function initMap() {
   var status ;
   $('#id-name--1').change(function() {
   status = $('#id-name--1').prop("checked");
+
   //If status is true.
   if(status){
     if (navigator.geolocation) {
@@ -142,6 +145,11 @@ $('.slide2').click(function(){
   $('#slide-menu_right').toggleClass('menu-active');
 });
 
+$('#id-name--2').change(function() {
+var news_button = $('#id-name--2').prop("checked");
+if(news_button === false) {$('#news_container').addClass('hide');}
+else{$('#news_container').removeClass('hide');}
+});
 //Knockout ViewModel
 function AppViewModel() {
   //Initial observable

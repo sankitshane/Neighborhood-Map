@@ -347,3 +347,7 @@ article {
   font-weight: bold;
   font-family: 'Lato', sans-serif;
 }
+
+#news_container.hide {
+  display: none;
+}
