@@ -351,3 +351,15 @@ article {
 #news_container.hide {
   display: none;
 }
+
+@media only screen and (max-width:480px) {
+  #news_container {
+    width:calc(100% - 130px);
+  }
+}
+
+@media only screen and (max-width:370px) {
+  header h2 {
+    font-size: 15px;
+  }
+}
