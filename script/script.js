@@ -159,6 +159,8 @@ function AppViewModel() {
   //Class for locations.
   function known_places(title, location) {
     var self = this;
+    self.theone = 0;
+    self.open = 0;
     self.title = title;
     self.location = location;
     self.show = function() {
@@ -172,16 +174,38 @@ function AppViewModel() {
         geocoder.geocode(
             { location: location,
             }, function(results, status) {
+              for(var i=0;i<results.length ; i++){
+                if(results[i].address_components[0].long_name[0] === self.title[0]){
+                  self.theone = i;
+                  break;
+                }
+              }
                 if (status == google.maps.GeocoderStatus.OK) {
-                  map.setCenter(results[0].geometry.location);
+                  map.setCenter(results[self.theone].geometry.location);
                   map.setZoom(15);
+
+                  var marker = new google.maps.Marker({
+                      map: map,
+                      position: self.location,
+                      title: self.title
+                  });
+                  var infowindow = new google.maps.InfoWindow({
+                      content: '<div class="place_title">' + results[self.theone].formatted_address + '</div>'
+                    });
+                    if(self.open === 0) {
+                    infowindow.open(map, marker);
+                    self.open++;
+                  }
                 } else {
                   window.alert('We could not find that location - try entering a more' +
                       ' specific place.');
                 }
               });
       }
+
+
     };
+
   };
 
   //observableArray adding instances of the known_places class.
