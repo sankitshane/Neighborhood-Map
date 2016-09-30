@@ -302,7 +302,18 @@ function AppViewModel() {
         infowindow.marker = null;
         });
         //set it up with the image and the place name.
-        infowindow.setContent('<div class="place_title">' + marker.title + '</div>' + '<img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size=200x200&location=' +marker.position.lat() +','+marker.position.lng()+'&fov=90&heading=235&pitch=10 &key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&v=3">');
+        if(window.innerWidth > 650) {
+        var width = Math.floor(window.innerWidth/3);
+        var height = Math.floor(window.innerHeight/3);
+      }else {
+        var width = 250;
+        var height = 198;
+      }
+      if(window.innerWidth > 350){
+        infowindow.setContent('<div class="place_title">' + marker.title + '</div>' + '<img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size='+ width +'x'+ height +'&location=' +marker.position.lat() +','+marker.position.lng()+'&fov=90&heading=235&pitch=10 &key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&v=3">');
+      }else {
+        infowindow.setContent('<div class="place_title">' + marker.title + '</div>');
+      }
         }
 
     infowindow.open(map, marker);
