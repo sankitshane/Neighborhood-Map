@@ -132,24 +132,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     'Error: Your browser doesn\'t support geolocation.');
 }
 
-//jQuery functions to toggle classes for effects.
-$('.nav-icon').click(function(){
-  $(this).toggleClass('open');
-});
 
-$('.slide1').click(function() {
-  $('#slide-menu').toggleClass('menu-active');
-});
 
-$('.slide2').click(function(){
-  $('#slide-menu_right').toggleClass('menu-active');
-});
-
-$('#id-name--2').change(function() {
-var news_button = $('#id-name--2').prop("checked");
-if(news_button === false) {$('#news_container').addClass('hide');}
-else{$('#news_container').removeClass('hide');}
-});
 //Knockout ViewModel
 function AppViewModel() {
   //Initial observable
@@ -157,15 +141,15 @@ function AppViewModel() {
   self.filter = ko.observable('');
 
   var toggleBounce = function(marker) {
-        if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
-        } else {
-          marker.setAnimation(google.maps.Animation.BOUNCE);
-          setTimeout(function() {
-        marker.setAnimation(null)
-    }, 2800);
-        }
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(function() {
+      marker.setAnimation(null)
+      }, 2800);
       }
+  }
 
   //Class for locations.
   function known_places(title, location) {
@@ -385,6 +369,24 @@ function AppViewModel() {
       $news_header.text('New York Times Article Could Not be Loaded');
   });
 };
+//jQuery functions to toggle classes for effects.
+$('.nav-icon').click(function() {
+  $(this).toggleClass('open');
+})
+
+$('.slide1').click(function() {
+  $('#slide-menu').toggleClass('menu-active');
+});
+
+$('.slide2').click(function(){
+  $('#slide-menu_right').toggleClass('menu-active');
+});
+
+$('#id-name--2').change(function() {
+var news_button = $('#id-name--2').prop("checked");
+if(news_button === false) {$('#news_container').addClass('hide');}
+else{$('#news_container').removeClass('hide');}
+});
 }
 
 //Knockout is applied to the page.
