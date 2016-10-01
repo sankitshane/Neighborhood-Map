@@ -156,6 +156,17 @@ function AppViewModel() {
   var self = this;
   self.filter = ko.observable('');
 
+  var toggleBounce = function(marker) {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(function() {
+        marker.setAnimation(null)
+    }, 2800);
+        }
+      }
+
   //Class for locations.
   function known_places(title, location) {
     var self = this;
@@ -245,8 +256,10 @@ function AppViewModel() {
 
         //Adding click event to each of the marker.
         marker.addListener('click', function() {
+        toggleBounce(this);
         self.populateInfoWindow(this, self.largeInfowindow);
         });
+
     }
   };
 
@@ -298,8 +311,10 @@ function AppViewModel() {
             });
             //Adds a InfoWindow.
             marker.addListener('click', function() {
+            toggleBounce(this);
             self.populateInfoWindow(this, self.largeInfowindow);
             });
+
             //pushes it to the location array.
             self.store_address.push(new known_places(address,results[0].geometry.location));
             //Increases the count for the ID.
@@ -323,6 +338,7 @@ function AppViewModel() {
         infowindow.marker = marker;
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function() {
+        marker.setAnimation(null);
         infowindow.marker = null;
         });
         //set it up with the image and the place name.
