@@ -13,13 +13,13 @@
 <body onload="knock.mark()">
   <!--Header Tab of the page contain two menus, one top-left side and other top-right side-->
   <header>
-    <div class="header_component slide1 nav-icon">
+    <div class="header_component slide1 nav-icon" data-bind="click : makeitwork,css:{open : newClass() == true }">
       <span></span>
       <span></span>
       <span></span>
     </div>
     <h2 class="header_component">Neighborhood Map</h2>
-    <div class="header_component slide2 nav-icon" style="position:absolute;right:0;margin-right:10px;">
+    <div class="header_component slide2 nav-icon" style="position:absolute;right:0;margin-right:10px;" data-bind="click : makeitwork_new,css:{open : newClass_new() == true }">
       <span></span>
       <span></span>
       <span></span>
@@ -30,7 +30,7 @@
     <label for="id-name--2" class="switch-label">News <span class="toggle--on">On</span><span class="toggle--off">Off</span></label>
   </div>
   <!--Slide Menu of the Left-->
-  <nav id='slide-menu' >
+  <nav id='slide-menu' data-bind="css: { 'menu-active' : newClass() == true}">
     <h2>Menu</h2>
     <ul>
       <!--Check button to automatically find your location-->
@@ -63,7 +63,7 @@
     </div>
   </nav>
   <!--Silde Menu from the right, Containing default location-->
-  <nav id='slide-menu_right'>
+  <nav id='slide-menu_right' data-bind="css: { 'menu-active' : newClass_new() == true}">
     <div id="filter_content">
       <button type="button" style="background-color:#283593;border-color:#283593"><img src="cd-icon-filter.svg"><strong> Filter</strong></button>
       <input type="text" id="filter" class="filter_item" data-bind="textInput: filter">
