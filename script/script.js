@@ -205,7 +205,7 @@ function AppViewModel() {
                   var marker = new google.maps.Marker({
                       map: map,
                       position: self.location,
-                      title: self.title,
+                      title: self.title
                   });
                   toggleBounce(marker);
                   var infowindow = new google.maps.InfoWindow({
@@ -246,7 +246,7 @@ function AppViewModel() {
   })
 
   //function to sent the markers and infowindows to the saved location.
-  self.mark = function() {
+  self.mark = function(address) {
     self.largeInfowindow = new google.maps.InfoWindow();
     //goes through all the stored addresses
     for (var i = 0; i < self.store_address().length; i++) {

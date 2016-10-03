@@ -6,6 +6,10 @@ This project also uses New York Times API to display the news of the place you p
 
 Here is the [link to the project](https://sankitshane.github.io/Neighborhood-Map/)
 
+### Host the Project Locally
+Just clone this Project and run the HTML File (*index.html*) . All the data is store in the client side 
+and not using any server. So it can run locally at your device.
+
 ##Framework used
 * jquery-3.1.0
 * knockout-3.4.0
