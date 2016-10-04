@@ -17,7 +17,6 @@ function initMap() {
       position: google.maps.ControlPosition.LEFT_TOP
     }
   });
-    ErrorMapLoading(map);
   //Variables for ControlPosition and Autocomplete.
   var news_button = document.getElementById('news_button');
   var news = document.getElementById('news_container');
@@ -139,12 +138,7 @@ function ErrorMapLoading(map) {
     console.log("Map load Complete");
   }
 }
-//jQuery functions to toggle classes for effects.
-$('#id-name--2').click(function() {
-var news_button = $('#id-name--2').prop("checked");
-if(news_button === false) {$('#news_container').addClass('hide');}
-else{$('#news_container').removeClass('hide');}
-});
+
 
 //Knockout ViewModel
 function AppViewModel() {
@@ -153,6 +147,8 @@ function AppViewModel() {
   self.filter = ko.observable('');
   self.newClass = ko.observable(false);
   self.newClass_new = ko.observable(false);
+  self.check = ko.observable(true);
+  this.isChecked = ko.observable(true);
   self.marker = [];
 
   var toggleBounce = function(marker) {
@@ -175,6 +171,17 @@ function AppViewModel() {
     else
       self.newClass_new(false);
   }
+
+  self.makeitwork_check = function() {
+    if(self.check() === false)
+      self.check(true);
+    else
+      self.check(false);
+  }
+
+  this.isChecked.subscribe(function(){
+        this.makeitwork_check();
+    }, this);
   //Class for locations.
   function known_places(title, location) {
     var self = this;
