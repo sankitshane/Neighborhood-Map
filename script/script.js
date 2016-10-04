@@ -153,6 +153,7 @@ function AppViewModel() {
   self.filter = ko.observable('');
   self.newClass = ko.observable(false);
   self.newClass_new = ko.observable(false);
+  self.marker = [];
 
   var toggleBounce = function(marker) {
       marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -239,14 +240,30 @@ function AppViewModel() {
 
   //Computed function for filter the locations in list.
   self.filteredItems = ko.computed(function() {
+    for(var i =0 ; i < self.marker.length ; i++){
+      self.marker[i].setMap(null);
+    }
     var filter = self.filter();
-    if (!filter) { return self.store_address(); }
-    return self.store_address().filter(function(i) {
+    if (!filter) {
+      for(var i =0 ; i < self.marker.length ; i++) {
+        self.marker[i].setMap(map);
+      }
+       return self.store_address();
+    }
+    var fil_addr = self.store_address().filter(function(i) {
        return i.title.indexOf(filter) > -1; });
+       for(var i =0 ; i < fil_addr.length ; i++) {
+         for(var j =0 ; j < self.marker.length ; j++){
+           if(self.marker[j].title === fil_addr[i].title) {
+             self.marker[j].setMap(map);
+           }
+         }
+       }
+       return fil_addr;
   })
 
   //function to sent the markers and infowindows to the saved location.
-  self.mark = function(address) {
+  self.mark = function() {
     self.largeInfowindow = new google.maps.InfoWindow();
     //goes through all the stored addresses
     for (var i = 0; i < self.store_address().length; i++) {
@@ -261,7 +278,7 @@ function AppViewModel() {
             animation: google.maps.Animation.DROP,
             id: i
         });
-
+        self.marker.push(marker);
         //Adding click event to each of the marker.
         marker.addListener('click', function() {
         toggleBounce(this);

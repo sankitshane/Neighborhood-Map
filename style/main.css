@@ -4,14 +4,14 @@ body {
   margin: 0;
   padding: 0;
   overflow-y: hidden;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   word-wrap: break-word;
 }
 
 @import url(http://weloveiconfonts.com/api/?family=zocial);
 /* zocial */
 [class*="zocial-"]:before {
-  font-family: 'zocial', sans-serif;
+  font-family: "zocial", sans-serif;
 }
 
 #map {
@@ -318,7 +318,7 @@ article {
 }
 
 #new_header {
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
 }
 
 #news_container h2 {
@@ -333,19 +333,19 @@ article {
 #news a {
   font-weight: bold;
   color: black;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 #news li {
   margin: 7px;
   border-bottom: 1px solid #BDBDBD;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 .place_title {
   text-align: center;
   font-weight: bold;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 #news_container.hide {
