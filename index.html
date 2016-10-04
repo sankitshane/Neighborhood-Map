@@ -7,6 +7,7 @@
       Neighborhood Map
     </title>
     <link rel="stylesheet" href="style/main.css">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=zocial" />
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
@@ -19,7 +20,7 @@
       <span></span>
     </div>
     <h2 class="header_component">Neighborhood Map</h2>
-    <div class="header_component slide2 nav-icon" style="position:absolute;right:0;margin-right:10px;" data-bind="click : makeitwork_new,css:{open : newClass_new() == true }">
+    <div class="header_component slide2 nav-icon" data-bind="click : makeitwork_new,css:{open : newClass_new() == true }">
       <span></span>
       <span></span>
       <span></span>
@@ -86,6 +87,6 @@
   <!--Scripts-->
   <script type='text/javascript' src='script/script.js'></script>
   <!--API-->
-  <script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry&key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&callback=initMap" async defer onerror="ErrorMapLoading()"></script>
 </body>
 </html>

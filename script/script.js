@@ -1,3 +1,4 @@
+
 //Initial Variables
 var map;
 var count = 0;
@@ -131,12 +132,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     'Error: Your browser doesn\'t support geolocation.');
 }
 
-function ErrorMapLoading(map) {
-  if(map === null) {
+function ErrorMapLoading() {
     console.log("Error fetching the JSON object of the Map");
-  } else {
-    console.log("Map load Complete");
-  }
 }
 
 
@@ -154,30 +151,24 @@ function AppViewModel() {
   var toggleBounce = function(marker) {
       marker.setAnimation(google.maps.Animation.BOUNCE);
       setTimeout(function() {
-      marker.setAnimation(null)
+      marker.setAnimation(null);
     }, 1400);
-}
+};
 
   self.makeitwork = function() {
-    if(self.newClass() === false)
-      self.newClass(true);
-    else
-      self.newClass(false);
-  }
+    if(self.newClass() === false){self.newClass(true);}
+    else {self.newClass(false);}
+  };
 
   self.makeitwork_new = function() {
-    if(self.newClass_new() === false)
-      self.newClass_new(true);
-    else
-      self.newClass_new(false);
-  }
+    if(self.newClass_new() === false){self.newClass_new(true);}
+    else{self.newClass_new(false);}
+  };
 
   self.makeitwork_check = function() {
-    if(self.check() === false)
-      self.check(true);
-    else
-      self.check(false);
-  }
+    if(self.check() === false){self.check(true);}
+    else{self.check(false);}
+  };
 
   this.isChecked.subscribe(function(){
         this.makeitwork_check();
@@ -229,11 +220,8 @@ function AppViewModel() {
                 }
               });
       }
-
-
     };
-
-  };
+  }
 
   //observableArray adding instances of the known_places class.
   self.store_address = ko.observableArray([
@@ -247,19 +235,20 @@ function AppViewModel() {
 
   //Computed function for filter the locations in list.
   self.filteredItems = ko.computed(function() {
-    for(var i =0 ; i < self.marker.length ; i++){
+    var i;
+    for(i =0 ; i < self.marker.length ; i++){
       self.marker[i].setMap(null);
     }
     var filter = self.filter();
     if (!filter) {
-      for(var i =0 ; i < self.marker.length ; i++) {
+      for(i =0 ; i < self.marker.length ; i++) {
         self.marker[i].setMap(map);
       }
        return self.store_address();
     }
     var fil_addr = self.store_address().filter(function(i) {
        return i.title.indexOf(filter) > -1; });
-       for(var i =0 ; i < fil_addr.length ; i++) {
+       for(i =0 ; i < fil_addr.length ; i++) {
          for(var j =0 ; j < self.marker.length ; j++){
            if(self.marker[j].title === fil_addr[i].title) {
              self.marker[j].setMap(map);
@@ -267,7 +256,7 @@ function AppViewModel() {
          }
        }
        return fil_addr;
-  })
+  });
 
   //function to sent the markers and infowindows to the saved location.
   self.mark = function() {
@@ -296,7 +285,7 @@ function AppViewModel() {
   };
 
   //function to zoom to the loaction on the search input.
-  self.zoom = function(address) {
+  self.zoom = function(address_zoom) {
     //uses google API geocoder
     var geocoder = new google.maps.Geocoder();
     var address = $("#search_place").val();
@@ -306,7 +295,7 @@ function AppViewModel() {
     }
     else {
       geocoder.geocode(
-          { address: address,
+          { address: address_zoom,
           }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               map.setCenter(results[0].geometry.location);
@@ -364,6 +353,8 @@ function AppViewModel() {
   self.populateInfoWindow = function(marker, infowindow) {
     var $news = $('#news');
     var $news_header = $('#news_header');
+    var screen_width;
+    var screen_height;
     if (infowindow.marker != marker) {
         // Clear the infowindow content to give the streetview time to load.
         infowindow.setContent('');
@@ -375,14 +366,14 @@ function AppViewModel() {
         });
         //set it up with the image and the place name.
         if(window.innerWidth > 650) {
-        var width = Math.floor(window.innerWidth/3);
-        var height = Math.floor(window.innerHeight/3);
+        screen_width = Math.floor(window.innerWidth/3);
+        screen_height = Math.floor(window.innerHeight/3);
       }else {
-        var width = 250;
-        var height = 198;
+        screen_width = 250;
+        screen_height = 198;
       }
       if(window.innerWidth > 350){
-        infowindow.setContent('<div class="place_title">' + marker.title + '</div>' + '<img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size='+ width +'x'+ height +'&location=' +marker.position.lat() +','+marker.position.lng()+'&fov=90&heading=235&pitch=10 &key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&v=3">');
+        infowindow.setContent('<div class="place_title">' + marker.title + '</div>' + '<img class="bgimg" src="https://maps.googleapis.com/maps/api/streetview?size='+ screen_width +'x'+ screen_height +'&location=' +marker.position.lat() +','+marker.position.lng()+'&fov=90&heading=235&pitch=10 &key=AIzaSyDGzY7uuAXgqbzLzr15kz7o4DVRVCPlC3Q&v=3">');
       }else {
         infowindow.setContent('<div class="place_title">' + marker.title + '</div>');
       }
@@ -404,14 +395,13 @@ function AppViewModel() {
         articles = data.response.docs;
         for(var i = 0;i < articles.length ;i++) {
         var article = articles[i];
-        if(article.snippet != null) {
+        if(article.snippet !== null) {
           //Appends the JSON value in the UL tag.
             $news.append('<li class="article">'+
-                        '<a href="' + article.web_url+'">'+article.headline.main+'</a>'
-                        +'<p>'+article.snippet+'</p>'+
-                          '</li>');
+                        '<a href="' + article.web_url+'">'+article.headline.main+'</a>' +'<p>'+article.snippet+'</p>'+
+                       '</li>');
           }
-        };
+        }
         //If fails
       }).fail(function(e) {
       $news_header.text('New York Times Article Could Not be Loaded');

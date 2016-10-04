@@ -363,3 +363,9 @@ article {
     font-size: 17px;
   }
 }
+
+.slide2 {
+  position:absolute;
+  right:0;
+  margin-right:10px;
+}
