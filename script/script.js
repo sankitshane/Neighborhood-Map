@@ -140,7 +140,7 @@ function ErrorMapLoading(map) {
   }
 }
 //jQuery functions to toggle classes for effects.
-$('#id-name--2').change(function() {
+$('#id-name--2').click(function() {
 var news_button = $('#id-name--2').prop("checked");
 if(news_button === false) {$('#news_container').addClass('hide');}
 else{$('#news_container').removeClass('hide');}
