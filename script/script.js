@@ -141,6 +141,9 @@ function AppViewModel() {
   self.geolocate = function() {
     d_count++;
     if(d_count === 1){infoWindow = new google.maps.InfoWindow({map: map});}
+    infoWindow.addListener('closeclick', function() {
+      d_count = 0;
+    });
     if(self.geoCheck() === false){self.geoCheck(true);}
     else{self.geoCheck(false);}
 
@@ -157,6 +160,7 @@ function AppViewModel() {
           infoWindow.setPosition(pos);
           infoWindow.setContent('Location found.');
           map.setCenter(pos);
+
           },
           function() {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -175,6 +179,7 @@ function AppViewModel() {
       infoWindow.setPosition(pos);
       infoWindow.setContent('New York City');
       map.setCenter(pos);
+
     }
 
   };
