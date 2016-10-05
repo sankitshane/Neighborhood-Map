@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=zocial" />
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
 </head>
-<body onload="knock.mark()">
+<body onload="knock.mark()" onload="knock.demo()">
   <!--Header Tab of the page contain two menus, one top-left side and other top-right side-->
   <header>
     <div class="header_component slide1 nav-icon" data-bind="click : makeitwork,css:{open : newClass() == true }">
@@ -36,7 +36,7 @@
     <ul>
       <!--Check button to automatically find your location-->
       <li class="menu-element">
-        <input type="checkbox" id="id-name--1" name="set-name" class="switch-input" >
+        <input type="checkbox" id="id-name--1" name="set-name" class="switch-input" data-bind="checked : geoisChecked">
         <label for="id-name--1" class="switch-label">Geo Location <span class="toggle--on">On</span><span class="toggle--off">Off</span></label>
       </li>
       <!--Search for perticular places with autocomplete functionality-->

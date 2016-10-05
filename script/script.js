@@ -35,7 +35,7 @@ function initMap() {
       map: map,
       anchorPoint: new google.maps.Point(0, -29)
   });
-
+  infoWindow.close();
   //Autocomplete added to the search input.
   autocomplete.addListener('place_changed', function() {
     //Initialing closing it.
@@ -80,48 +80,6 @@ function initMap() {
       infoWindow.open(map, marker);
   });
 
-  //Geolocation Feature added.
-  var status ;
-  $('#id-name--1').change(function() {
-  status = $('#id-name--1').prop("checked");
-
-  //If status is true.
-  if(status){
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        //get the lat, lng coordinates of the current device.
-        var pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-
-        //Updating the infoWindow that is location is found.
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
-        map.setCenter(pos);
-        },
-        function() {
-          handleLocationError(true, infoWindow, map.getCenter());
-        });
-    }
-    else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
-    }
-  }
-  //Default location if the status is false
-  else {
-    var pos = {
-      lat: 40.7413549,
-      lng: -73.9980244
-    };
-
-    infoWindow.setPosition(pos);
-    infoWindow.setContent('New York City');
-    map.setCenter(pos);
-  }
-  }).change();
-
 }
 
 //Error function if the geo location function fails to track the position of the device.
@@ -141,11 +99,15 @@ function ErrorMapLoading() {
 function AppViewModel() {
   //Initial observable
   var self = this;
+  var infoWindow;
+  var d_count= 0 ;
   self.filter = ko.observable('');
   self.newClass = ko.observable(false);
   self.newClass_new = ko.observable(false);
   self.check = ko.observable(true);
   this.isChecked = ko.observable(true);
+  this.geoisChecked = ko.observable(false);
+  this.geoCheck = ko.observable(false);
   self.marker = [];
 
   var toggleBounce = function(marker) {
@@ -173,6 +135,53 @@ function AppViewModel() {
   this.isChecked.subscribe(function(){
         this.makeitwork_check();
     }, this);
+
+
+//Geolocation Feature added.
+  self.geolocate = function() {
+    d_count++;
+    if(d_count === 1){infoWindow = new google.maps.InfoWindow({map: map});}
+    if(self.geoCheck() === false){self.geoCheck(true);}
+    else{self.geoCheck(false);}
+
+    if(self.geoCheck()){
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          //get the lat, lng coordinates of the current device.
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          //Updating the infoWindow that is location is found.
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          map.setCenter(pos);
+          },
+          function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+      }
+      else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    } else {
+      var pos = {
+        lat: 40.7413549,
+        lng: -73.9980244
+      };
+
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('New York City');
+      map.setCenter(pos);
+    }
+
+  };
+  this.geoisChecked.subscribe(function(){
+        this.geolocate();
+    }, this);
+
   //Class for locations.
   function known_places(title, location) {
     var self = this;
@@ -183,7 +192,6 @@ function AppViewModel() {
     self.show = function() {
       var geocoder = new google.maps.Geocoder();
       var location = self.location;
-
       if(location == ' ') {
         window.alert('You must enter an area, or address.');
       }
@@ -206,6 +214,7 @@ function AppViewModel() {
                       position: self.location,
                       title: self.title
                   });
+
                   toggleBounce(marker);
                   var infowindow = new google.maps.InfoWindow({
                       content: '<div class="place_title">' + results[self.theone].formatted_address + '</div>'
