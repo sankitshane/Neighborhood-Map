@@ -102,6 +102,9 @@ function AppViewModel() {
   var infoWindow;
   var d_count= 0 ;
   self.filter = ko.observable('');
+  self.search_area = ko.observable('');
+  self.$news = ko.observableArray([]);
+  self.$news_header = ko.observable();
   self.newClass = ko.observable(false);
   self.newClass_new = ko.observable(false);
   self.check = ko.observable(true);
@@ -302,7 +305,7 @@ function AppViewModel() {
   self.zoom = function(address_zoom) {
     //uses google API geocoder
     var geocoder = new google.maps.Geocoder();
-    var address = $("#search_place").val();
+    var address = self.search_area();
 
     if(address == ' ') {
       window.alert('You must enter an area, or address.');
@@ -326,7 +329,7 @@ function AppViewModel() {
   //and pushes the location to the loaction array.
   self.storeaddr = function() {
     var geocoder = new google.maps.Geocoder();
-    var address = $("#search_place").val();
+    var address = self.search_area();
     self.largeInfowindow = new google.maps.InfoWindow();
     if(address == ' ') {
       window.alert('You must enter an area, or address.');
@@ -365,8 +368,6 @@ function AppViewModel() {
 
   //Function used to add content to the infowindow of the markers.
   self.populateInfoWindow = function(marker, infowindow) {
-    var $news = $('#news');
-    var $news_header = $('#news_header');
     var screen_width;
     var screen_height;
     if (infowindow.marker != marker) {
@@ -394,7 +395,7 @@ function AppViewModel() {
         }
 
     infowindow.open(map, marker);
-    $news.text("");
+    self.$news("");
 
     //Forms the URL for New York Times API for the perticular location.
     var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
@@ -405,21 +406,25 @@ function AppViewModel() {
 
       //Sends a AJAX request to get the JSON value back.
     $.getJSON(url,function(data) {
-        $news_header.text('New YorkTimes Article About ' + marker.title);
+        self.$news_header('New YorkTimes Article About ' + marker.title);
         articles = data.response.docs;
+        var new_articles = [];
         for(var i = 0;i < articles.length ;i++) {
         var article = articles[i];
         if(article.snippet !== null) {
           //Appends the JSON value in the UL tag.
-            $news.append('<li class="article">'+
-                        '<a href="' + article.web_url+'">'+article.headline.main+'</a>' +'<p>'+article.snippet+'</p>'+
+
+            new_articles.push('<li class="article">'+
+                       '<a href="' + article.web_url+'">'+article.headline.main+'</a>' +'<p>'+article.snippet+'</p>'+
                        '</li>');
           }
         }
+        self.$news(new_articles);
         //If fails
       }).fail(function(e) {
-      $news_header.text('New York Times Article Could Not be Loaded');
+      self.$news_header('New York Times Article Could Not be Loaded');
   });
+
 };
 
 }

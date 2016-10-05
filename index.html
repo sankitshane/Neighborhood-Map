@@ -45,7 +45,7 @@
       </li>
       <!--Button to zoom on the place in the text input-->
       <li>
-        <input type="text" name="Place" placeholder="New York City" id="search_place">
+        <input type="text" name="Place" placeholder="New York City" id="search_place" data-bind="textInput: search_area ">
         <button type="button" class="last_ones" data-bind="click: zoom">Zoom</button>
       </li>
       <!--Button to put markers at your desired location in the input field-->
@@ -75,9 +75,11 @@
     </ul>
   </nav>
   <!--News Stand for the marker your just clicked-->
-  <div id="news_container" data-bind="css:{ 'hide' : check() == false}">
-    <h2 id="news_header"></h2>
-    <ul id="news"></ul>
+  <div id="news_container" data-bind="css:{ 'hide' : check() == false}" >
+    <h2 id="news_header" data-bind="text: $news_header"></h2>
+    <ul id="news" data-bind = "foreach: $news">
+      <span data-bind="html: $data"><span>
+    </ul>
   </div>
   <!--Where the map is loaded-->
   <div id="map"></div>
