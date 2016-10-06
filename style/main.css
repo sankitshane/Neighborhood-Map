@@ -369,3 +369,13 @@ article {
   right:0;
   margin-right:10px;
 }
+
+#error{
+  height: 120px;
+  width: 600px;
+  margin: auto;
+  text-align: center;
+  margin-top: 150px;
+  border: 5px solid black;
+
+}

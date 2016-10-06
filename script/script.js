@@ -91,7 +91,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 function ErrorMapLoading() {
-    console.log("Error fetching the JSON object of the Map");
+  var body = window.document.getElementById('map');
+  body.innerHTML = '<div id="error"><h2>Due to some ERROR, Google Maps API is not fetching data.Please check google Ajax request.</h2></div>';
 }
 
 
@@ -261,10 +262,10 @@ function AppViewModel() {
       for(i =0 ; i < self.marker.length ; i++) {
         self.marker[i].setMap(map);
       }
-       return self.store_address();
+       return self.store_address()
     }
     var fil_addr = self.store_address().filter(function(i) {
-       return i.title.indexOf(filter) > -1; });
+       return (i.title.indexOf(filter)) > -1; });
        for(i =0 ; i < fil_addr.length ; i++) {
          for(var j =0 ; j < self.marker.length ; j++){
            if(self.marker[j].title === fil_addr[i].title) {
